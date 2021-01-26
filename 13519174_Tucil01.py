@@ -26,6 +26,7 @@ def lead_is_zero(solution_mapped,leads):
 
 def crypta_permutation():
 # Membuka dan membaca file test.txt
+        print("Program membaca file test.txt")
         f=open("test.txt", "r")
         contents =f.read()
         
@@ -62,15 +63,15 @@ def crypta_permutation():
                         count_result = count_result +1
                         print()
                         print('\n'.join(str(get_value(word, solution_mapped)).rjust(len(result)) for word in operand) + '+\n'+'-'*len(result)+'\n' + str(get_value(result, solution_mapped)))#" = {} (mapping: {})".format(get_value(result, solution_mapped), solution_mapped))
-                        print("Hasil ditemukan, waktu yang diperlukan untuk menemukan solusi ke-",count_result,"adalah : ", timer_stop-timer_start," detik")
+                        print("Hasil ditemukan, waktu yang diperlukan untuk menemukan solusi ke-",count_result,"adalah : ", "%.4f" %(timer_stop-timer_start)," detik")
                         print("Jumlah tes substitusi yang dilakukan untuk menemukan solusi ke-",count_result,"adalah : ", count," kali")
         print()
-        print ("Program selesai, total waktu yang diperlukan:", time.perf_counter()-timer_start," detik")
+        print ("Program selesai, total waktu yang diperlukan:", "%.4f" %(time.perf_counter()-timer_start)," detik")
         print ("Jumlah total tes yang dilakukan : ", count," kali")
         print ("Jumlah solusi yang ditemukan : ", count_result," solusi")
         f.close()
                     
 if __name__ == '__main__':
         crypta_permutation()
-
+        selesai = input('Tekan Enter untuk keluar dari program')
 
