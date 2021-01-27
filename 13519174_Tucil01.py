@@ -25,13 +25,13 @@ def lead_is_zero(solution_mapped,leads):
 
 
 def crypta_permutation():
-# Membuka dan membaca file test.txt
-        print("Program membaca file test.txt")
-        f=open("test.txt", "r")
+# Membuka dan membaca file soal.txt
+        print("Program membaca file soal.txt")
+        f=open("soal.txt", "r")
         contents =f.read()
         
 # Memisahkan operand dan hasil
-        operand, result = contents.lower().replace(' ', '').split('+\n------')
+        operand, result = contents.lower().replace(' ', '').replace('-', '').split('+\n')
         result = result.replace ('\n','')
 # Memisahkan semua operand
         operand = operand.split('\n')
@@ -45,31 +45,34 @@ def crypta_permutation():
                         letters.add(letter)
         letters = list(letters)
         leads = list(leads)
-
-        count = 0
-        count_result = 0
-        timer_start = time.perf_counter()
-        print ("Program dimulai")
-        print ()
-        print (contents)
-# Memulai permutasi dan melakukan mapping terhadap list huruf yang muncul
-        for perm in itertools.permutations(range(10), len(letters)):                
-                solution_mapped = dict(zip(letters, perm))
-                if lead_is_zero(solution_mapped,leads) :        # Melakukan continue dari iterasi jika terdapat huruf awal dengan value 0
-                        continue                        
-                count = count+1
-                if sum(get_value(word, solution_mapped) for word in operand) == get_value(result, solution_mapped):
-                        timer_stop = time.perf_counter()
-                        count_result = count_result +1
-                        print()
-                        print('\n'.join(str(get_value(word, solution_mapped)).rjust(len(result)) for word in operand) + '+\n'+'-'*len(result)+'\n' + str(get_value(result, solution_mapped)))#" = {} (mapping: {})".format(get_value(result, solution_mapped), solution_mapped))
-                        print("Hasil ditemukan, waktu yang diperlukan untuk menemukan solusi ke-",count_result,"adalah : ", "%.4f" %(timer_stop-timer_start)," detik")
-                        print("Jumlah tes substitusi yang dilakukan untuk menemukan solusi ke-",count_result,"adalah : ", count," kali")
-        print()
-        print ("Program selesai, total waktu yang diperlukan:", "%.4f" %(time.perf_counter()-timer_start)," detik")
-        print ("Jumlah total tes yang dilakukan : ", count," kali")
-        print ("Jumlah solusi yang ditemukan : ", count_result," solusi")
-        f.close()
+        
+        if len(leads)<11 :
+                count = 0
+                count_result = 0
+                timer_start = time.perf_counter()
+                print ("Program dimulai")
+                print ()
+                print (contents)
+        # Memulai permutasi dan melakukan mapping terhadap list huruf yang muncul
+                for perm in itertools.permutations(range(10), len(letters)):                
+                        solution_mapped = dict(zip(letters, perm))
+                        if lead_is_zero(solution_mapped,leads) :        # Melakukan continue dari iterasi jika terdapat huruf awal dengan value 0
+                                continue                        
+                        count = count+1
+                        if sum(get_value(word, solution_mapped) for word in operand) == get_value(result, solution_mapped):
+                                timer_stop = time.perf_counter()
+                                count_result = count_result +1
+                                print()
+                                print('\n'.join(str(get_value(word, solution_mapped)).rjust(len(result)) for word in operand) + '+\n'+'-'*len(result)+'\n' + str(get_value(result, solution_mapped)))#" = {} (mapping: {})".format(get_value(result, solution_mapped), solution_mapped))
+                                print("Hasil ditemukan, waktu yang diperlukan untuk menemukan solusi ke-",count_result,"adalah : ", "%.4f" %(timer_stop-timer_start)," detik")
+                                print("Jumlah tes substitusi yang dilakukan untuk menemukan solusi ke-",count_result,"adalah : ", count," kali")
+                print()
+                print ("Program selesai, total waktu yang diperlukan:", "%.4f" %(time.perf_counter()-timer_start)," detik")
+                print ("Jumlah total tes yang dilakukan : ", count," kali")
+                print ("Jumlah solusi yang ditemukan : ", count_result," solusi")
+                f.close()
+        else :
+                "Huruf yang muncul lebih dari 10"
                     
 if __name__ == '__main__':
         crypta_permutation()
